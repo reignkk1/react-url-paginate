@@ -1,25 +1,17 @@
-import {
-  BrowserRouter,
-  Link,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
 import styled from "@emotion/styled";
 
 interface PaginationProps {
   total: number;
   pageItems: number;
+  router: any;
 }
 
-export default function Paginate({ total, pageItems }: PaginationProps) {
-  return (
-    <BrowserRouter>
-      <Pagination total={total} pageItems={pageItems} />
-    </BrowserRouter>
-  );
-}
-
-function Pagination({ total, pageItems }: PaginationProps) {
+export default function Pagination({
+  total,
+  pageItems,
+  router,
+}: PaginationProps) {
+  const { useSearchParams, useNavigate, Link } = router;
   const pageTotal = Math.ceil(total / pageItems);
   const numbers = Array.from({ length: pageTotal }, (_, pageNumber) =>
     String(pageNumber + 1)
