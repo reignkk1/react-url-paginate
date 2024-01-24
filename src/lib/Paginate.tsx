@@ -1,4 +1,9 @@
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  BrowserRouter,
+  Link,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import styled from "@emotion/styled";
 
 interface PaginationProps {
@@ -6,7 +11,15 @@ interface PaginationProps {
   pageItems: number;
 }
 
-export default function Pagination({ total, pageItems }: PaginationProps) {
+export default function Paginate({ total, pageItems }: PaginationProps) {
+  return (
+    <BrowserRouter>
+      <Pagination total={total} pageItems={pageItems} />
+    </BrowserRouter>
+  );
+}
+
+function Pagination({ total, pageItems }: PaginationProps) {
   const pageTotal = Math.ceil(total / pageItems);
   const numbers = Array.from({ length: pageTotal }, (_, pageNumber) =>
     String(pageNumber + 1)
@@ -65,6 +78,10 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 100px;
+  ul,
+  li {
+    list-style: none;
+  }
 `;
 
 const List = styled.ul`
@@ -85,6 +102,7 @@ const ListItem = styled.li<{ active: boolean }>`
     background-color: ${(props) => (props.active ? "#eaedf4" : "none")};
     border: ${(props) => (props.active ? "1px solid black" : "none")};
     cursor: pointer;
+    text-decoration: none;
     &:hover {
       background-color: #eaedf4;
     }
