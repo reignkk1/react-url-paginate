@@ -1,4 +1,4 @@
-# react-url-paginate
+# [react-url-paginate](https://www.npmjs.com/package/react-url-paginate) &middot; [![npm version](https://img.shields.io/badge/npm-v0.0.6-blue)](https://www.npmjs.com/package/react-url-paginate)
 
 <img src='https://im3.ezgif.com/tmp/ezgif-3-ce5be1422b.gif'>
 
