@@ -1,6 +1,7 @@
 # [react-url-paginate](https://www.npmjs.com/package/react-url-paginate) &middot; [![npm version](https://img.shields.io/badge/npm-v0.0.6-blue)](https://www.npmjs.com/package/react-url-paginate)
 
-<img src='https://im3.ezgif.com/tmp/ezgif-3-ce5be1422b.gif'>
+![paginate-ezgif com-video-to-gif-converter](https://github.com/reignkk1/react-url-paginate/assets/87847136/842ff5b2-5be7-40f2-95df-7d2456869923)
+
 
 ## install
 
