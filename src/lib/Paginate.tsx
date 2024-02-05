@@ -1,12 +1,16 @@
 import styled from "@emotion/styled";
 
 interface PaginationProps {
+  prevLabel: string;
+  nextLabel: string;
   total: number;
   pageItems: number;
   router: any;
 }
 
 export default function Pagination({
+  prevLabel,
+  nextLabel,
   total,
   pageItems,
   router,
@@ -49,21 +53,37 @@ export default function Pagination({
     );
   });
 
-  const prevButton = activePrevButton && (
-    <Button onClick={handleClickPrev}>{`< 이전`}</Button>
-  );
-
-  const nextButton = activeNextButton && (
-    <Button onClick={handleClickNext}>{`다음 >`}</Button>
-  );
-
   return (
     <Container>
-      {prevButton}
+      <FlexButton onClick={handleClickPrev} active={activePrevButton}>
+        {prevLabel}
+      </FlexButton>
       <List>{pageButtons}</List>
-      {nextButton}
+      <FlexButton onClick={handleClickNext} active={activeNextButton}>
+        {nextLabel}
+      </FlexButton>
     </Container>
   );
+}
+
+function FlexButton({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  let button;
+
+  if (active) {
+    button = <Button onClick={onClick}>{children}</Button>;
+  } else {
+    button = <Button style={{ opacity: "0", cursor: "default" }}></Button>;
+  }
+
+  return button;
 }
 
 const Container = styled.div`
@@ -92,7 +112,7 @@ const ListItem = styled.li<{ active: boolean }>`
     height: 30px;
     margin-right: 5px;
     background-color: ${(props) => (props.active ? "#eaedf4" : "none")};
-    border: ${(props) => (props.active ? "1px solid black" : "none")};
+    border: ${(props) => (props.active ? "1px solid rgba(0,0,0,0.3)" : "none")};
     cursor: pointer;
     text-decoration: none;
     &:hover {
@@ -103,6 +123,7 @@ const ListItem = styled.li<{ active: boolean }>`
 `;
 
 const Button = styled.button`
+  width: 60px;
   border: none;
   background-color: white;
   border-radius: 5px;
