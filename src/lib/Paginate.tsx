@@ -1,11 +1,27 @@
 import styled from "@emotion/styled";
+import type {
+  NavigateFunction,
+  LinkProps,
+  URLSearchParamsInit,
+  SetURLSearchParams,
+  Location,
+} from "react-router-dom";
 
 interface PaginationProps {
   prevLabel: string;
   nextLabel: string;
   total: number;
   pageItems: number;
-  router: any;
+  router: {
+    useNavigate(): NavigateFunction;
+    Link: React.ForwardRefExoticComponent<
+      LinkProps & React.RefAttributes<HTMLAnchorElement>
+    >;
+    useSearchParams(
+      defaultInit?: URLSearchParamsInit
+    ): [URLSearchParams, SetURLSearchParams];
+    useLocation(): Location;
+  };
 }
 
 export default function Pagination({
@@ -15,12 +31,13 @@ export default function Pagination({
   pageItems,
   router,
 }: PaginationProps) {
-  const { useSearchParams, useNavigate, Link } = router;
+  const { useSearchParams, useNavigate, Link, useLocation } = router;
   const pageTotal = Math.ceil(total / pageItems);
   const numbers = Array.from({ length: pageTotal }, (_, pageNumber) =>
     String(pageNumber + 1)
   );
 
+  const { search } = useLocation();
   const [searchParams] = useSearchParams();
   const page = searchParams.get("page") || "1";
   const navigate = useNavigate();
@@ -33,7 +50,13 @@ export default function Pagination({
   const activeNextButton = !pageNumbers.includes(numbers[numbers.length - 1]);
 
   const getLinkPageButton = (pageNumber: string) => {
-    return `?page=${pageNumber}`;
+    if (search === "") {
+      return `?page=${pageNumber}`;
+    } else if (search.includes("page")) {
+      return search.replace(`page=${page}`, `page=${pageNumber}`);
+    } else {
+      return search + `&page=${pageNumber}`;
+    }
   };
 
   const handleClickNext = () => {
